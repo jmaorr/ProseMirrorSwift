@@ -1,0 +1,12 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+  # The oracle pins exact ProseMirror versions on purpose (the port tracks them); only
+  # security updates are wanted there, which Dependabot raises regardless of this schedule.
+  - package-ecosystem: npm
+    directory: /devserver
+    schedule:
+      interval: monthly

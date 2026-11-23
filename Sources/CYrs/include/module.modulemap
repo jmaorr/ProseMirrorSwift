@@ -1,0 +1,4 @@
+module CYrs {
+    header "libyrs.h"
+    export *
+}

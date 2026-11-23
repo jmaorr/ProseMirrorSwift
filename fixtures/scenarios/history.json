@@ -1,0 +1,48 @@
+[
+  {
+    "name": "fast typing is one undo group",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "<a>"]],
+    "steps": [{"type": "hello"}, {"key": "Mod-z"}],
+    "expect": ["doc", ["paragraph"]]
+  },
+  {
+    "name": "a pause starts a new undo group",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "<a>"]],
+    "steps": [{"type": "hello"}, {"wait": 1000}, {"type": " world"}, {"key": "Mod-z"}],
+    "expect": ["doc", ["paragraph", "hello"]]
+  },
+  {
+    "name": "non-adjacent edit starts a new group",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "abc<a>"], ["paragraph", "def"]],
+    "steps": [{"type": "x"}, {"select": [9]}, {"type": "y"}, {"key": "Mod-z"}],
+    "expect": ["doc", ["paragraph", "abcx"], ["paragraph", "def"]]
+  },
+  {
+    "name": "undo then redo",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "a<a>"]],
+    "steps": [{"type": "bc"}, {"key": "Enter"}, {"wait": 600}, {"type": "d"}, {"key": "Mod-z"}, {"key": "Mod-z"}, {"key": "Shift-Mod-z"}]
+  },
+  {
+    "name": "undo restores selection and bold",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "x <a>word<b> y"]],
+    "steps": [{"key": "Mod-b"}, {"wait": 600}, {"type": "Z"}, {"key": "Mod-z"}, {"key": "Mod-z"}]
+  },
+  {
+    "name": "Backspace right after an input rule undoes it",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "<a>"]],
+    "steps": [{"type": "# "}, {"key": "Backspace"}],
+    "expect": ["doc", ["paragraph", "# "]]
+  },
+  {
+    "name": "stored marks survive nothing across undo",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "ab<a>"]],
+    "steps": [{"type": "c"}, {"key": "Mod-b"}, {"key": "Mod-z"}, {"type": "d"}]
+  }
+]

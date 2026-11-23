@@ -1,0 +1,21 @@
+name: Bug report
+description: Something behaves differently from ProseMirror, or crashes.
+body:
+  - type: textarea
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Document and steps
+      description: The smallest document (JSON) and the keys, commands or edits that show it. A scenario in fixtures/scenarios format is ideal.
+      render: json
+  - type: input
+    attributes:
+      label: Platform
+      description: macOS or iOS version, Xcode version, package version.
+  - type: markdown
+    attributes:
+      value: Security problems go to a private advisory instead (see SECURITY.md).

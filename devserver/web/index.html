@@ -1,0 +1,25 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YSync web peer</title>
+<style>
+  :root { color-scheme: light dark; --bg: #fff; --fg: #1d1d1f; --muted: #86868b; --card: rgba(0,0,0,.04); --border: rgba(0,0,0,.1); }
+  @media (prefers-color-scheme: dark) { :root { --bg: #1e1e1e; --fg: #f5f5f7; --muted: #98989d; --card: rgba(255,255,255,.06); --border: rgba(255,255,255,.14); } }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 -apple-system, system-ui, sans-serif; }
+  header { padding: 10px 16px; font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--border); }
+  #editor { max-width: 720px; margin: 0 auto; padding: 24px 16px; }
+  .ProseMirror { outline: none; white-space: pre-wrap; }
+  .ProseMirror pre { background: var(--card); padding: 8px 12px; border-radius: 6px; }
+  .ProseMirror blockquote { border-left: 3px solid var(--border); margin-left: 0; padding-left: 12px; color: var(--muted); }
+  .pm-taskItem { list-style: none; }
+  .pm-taskItem::before, .pm-taskCard::before { content: "☐ "; }
+  .pm-taskItem[data-checked="true"]::before, .pm-taskCard[data-checked="true"]::before { content: "☑ "; }
+  .pm-taskCard { border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px; margin: 6px 0; display: flex; gap: 4px; flex-direction: column; }
+  .pm-taskCardDescription { color: var(--muted); font-size: .875em; }
+  .pm-promptSnippet { border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; margin: 6px 0; }
+  .pm-linkCard { border: 1px solid var(--border); border-radius: 6px; padding: 0 6px; font-size: .875em; }
+  .pm-highlight { background: #fff3a0; color: inherit; }
+</style>
+<header id="status">connecting…</header>
+<div id="editor"></div>
+<script type="module" src="dist/client.js"></script>

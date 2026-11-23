@@ -1,0 +1,148 @@
+{
+  "nodes": [
+    [
+      "doc",
+      {
+        "content": "block+"
+      }
+    ],
+    [
+      "paragraph",
+      {
+        "content": "inline*",
+        "group": "block"
+      }
+    ],
+    [
+      "blockquote",
+      {
+        "content": "block+",
+        "group": "block",
+        "defining": true
+      }
+    ],
+    [
+      "horizontal_rule",
+      {
+        "group": "block"
+      }
+    ],
+    [
+      "heading",
+      {
+        "attrs": {
+          "level": {
+            "default": 1,
+            "validate": "number"
+          }
+        },
+        "content": "inline*",
+        "group": "block",
+        "defining": true
+      }
+    ],
+    [
+      "code_block",
+      {
+        "content": "text*",
+        "marks": "",
+        "group": "block",
+        "code": true,
+        "defining": true
+      }
+    ],
+    [
+      "text",
+      {
+        "group": "inline"
+      }
+    ],
+    [
+      "image",
+      {
+        "inline": true,
+        "attrs": {
+          "src": {
+            "validate": "string"
+          },
+          "alt": {
+            "default": null,
+            "validate": "string|null"
+          },
+          "title": {
+            "default": null,
+            "validate": "string|null"
+          }
+        },
+        "group": "inline",
+        "draggable": true
+      }
+    ],
+    [
+      "hard_break",
+      {
+        "inline": true,
+        "group": "inline",
+        "selectable": false
+      }
+    ],
+    [
+      "ordered_list",
+      {
+        "attrs": {
+          "order": {
+            "default": 1,
+            "validate": "number"
+          }
+        },
+        "content": "list_item+",
+        "group": "block"
+      }
+    ],
+    [
+      "bullet_list",
+      {
+        "content": "list_item+",
+        "group": "block"
+      }
+    ],
+    [
+      "list_item",
+      {
+        "defining": true,
+        "content": "paragraph block*"
+      }
+    ]
+  ],
+  "marks": [
+    [
+      "link",
+      {
+        "attrs": {
+          "href": {
+            "validate": "string"
+          },
+          "title": {
+            "default": null,
+            "validate": "string|null"
+          }
+        },
+        "inclusive": false
+      }
+    ],
+    [
+      "em",
+      {}
+    ],
+    [
+      "strong",
+      {}
+    ],
+    [
+      "code",
+      {
+        "code": true
+      }
+    ]
+  ]
+}

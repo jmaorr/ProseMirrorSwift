@@ -1,0 +1,292 @@
+{
+  "nodes": [
+    [
+      "paragraph",
+      {
+        "content": "inline*",
+        "group": "block",
+        "attrs": {
+          "textAlign": {
+            "default": null
+          }
+        }
+      }
+    ],
+    [
+      "blockquote",
+      {
+        "content": "block+",
+        "group": "block",
+        "defining": true
+      }
+    ],
+    [
+      "bulletList",
+      {
+        "content": "listItem+",
+        "group": "block list",
+        "attrs": {
+          "tight": {
+            "default": true
+          }
+        }
+      }
+    ],
+    [
+      "codeBlock",
+      {
+        "content": "text*",
+        "marks": "",
+        "group": "block",
+        "code": true,
+        "defining": true,
+        "attrs": {
+          "language": {
+            "default": null
+          }
+        }
+      }
+    ],
+    [
+      "doc",
+      {
+        "content": "block+"
+      }
+    ],
+    [
+      "hardBreak",
+      {
+        "group": "inline",
+        "inline": true,
+        "selectable": false,
+        "linebreakReplacement": true
+      }
+    ],
+    [
+      "heading",
+      {
+        "content": "inline*",
+        "group": "block",
+        "defining": true,
+        "attrs": {
+          "textAlign": {
+            "default": null
+          },
+          "level": {
+            "default": 1
+          }
+        }
+      }
+    ],
+    [
+      "horizontalRule",
+      {
+        "group": "block"
+      }
+    ],
+    [
+      "listItem",
+      {
+        "content": "paragraph block*",
+        "defining": true
+      }
+    ],
+    [
+      "orderedList",
+      {
+        "content": "listItem+",
+        "group": "block list",
+        "attrs": {
+          "tight": {
+            "default": true
+          },
+          "start": {
+            "default": 1
+          },
+          "type": {
+            "default": null
+          }
+        }
+      }
+    ],
+    [
+      "text",
+      {
+        "group": "inline"
+      }
+    ],
+    [
+      "taskList",
+      {
+        "content": "taskItem+",
+        "group": "block list"
+      }
+    ],
+    [
+      "taskItem",
+      {
+        "content": "paragraph block*",
+        "defining": true,
+        "attrs": {
+          "checked": {
+            "default": false
+          }
+        }
+      }
+    ],
+    [
+      "image",
+      {
+        "group": "block",
+        "inline": false,
+        "draggable": true,
+        "attrs": {
+          "src": {
+            "default": null
+          },
+          "alt": {
+            "default": null
+          },
+          "title": {
+            "default": null
+          },
+          "width": {
+            "default": null
+          },
+          "height": {
+            "default": null
+          }
+        }
+      }
+    ],
+    [
+      "table",
+      {
+        "tableRole": "table",
+        "content": "tableRow+",
+        "group": "block",
+        "isolating": true
+      }
+    ],
+    [
+      "tableRow",
+      {
+        "tableRole": "row",
+        "content": "(tableCell | tableHeader)*"
+      }
+    ],
+    [
+      "tableHeader",
+      {
+        "tableRole": "header_cell",
+        "content": "block+",
+        "isolating": true,
+        "attrs": {
+          "colspan": {
+            "default": 1
+          },
+          "rowspan": {
+            "default": 1
+          },
+          "colwidth": {
+            "default": null
+          }
+        }
+      }
+    ],
+    [
+      "tableCell",
+      {
+        "tableRole": "cell",
+        "content": "block+",
+        "isolating": true,
+        "attrs": {
+          "colspan": {
+            "default": 1
+          },
+          "rowspan": {
+            "default": 1
+          },
+          "colwidth": {
+            "default": null
+          }
+        }
+      }
+    ]
+  ],
+  "marks": [
+    [
+      "link",
+      {
+        "inclusive": true,
+        "attrs": {
+          "href": {
+            "default": null
+          },
+          "target": {
+            "default": "_blank"
+          },
+          "rel": {
+            "default": "noopener noreferrer nofollow"
+          },
+          "class": {
+            "default": null
+          }
+        }
+      }
+    ],
+    [
+      "textStyle",
+      {
+        "attrs": {
+          "color": {
+            "default": null
+          }
+        }
+      }
+    ],
+    [
+      "bold",
+      {}
+    ],
+    [
+      "code",
+      {
+        "excludes": "_",
+        "code": true
+      }
+    ],
+    [
+      "italic",
+      {}
+    ],
+    [
+      "strike",
+      {}
+    ],
+    [
+      "underline",
+      {}
+    ],
+    [
+      "highlight",
+      {
+        "attrs": {
+          "color": {
+            "default": null
+          }
+        }
+      }
+    ],
+    [
+      "subscript",
+      {}
+    ],
+    [
+      "superscript",
+      {}
+    ]
+  ],
+  "topNode": "doc",
+  "source": "A Tiptap-style schema (StarterKit naming plus task lists, images, tables, highlight, underline, sub/superscript), used to fuzz the port against a schema with camelCase names, attrs and tables."
+}

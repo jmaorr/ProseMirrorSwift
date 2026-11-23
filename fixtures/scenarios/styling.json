@@ -1,0 +1,556 @@
+[
+  {
+    "name": "bold before typing (stored mark)",
+    "schema": "basic",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        "hello <a>"
+      ]
+    ],
+    "steps": [
+      {
+        "key": "Mod-b"
+      },
+      {
+        "type": "world"
+      }
+    ],
+    "expect": [
+      "doc",
+      [
+        "paragraph",
+        "hello ",
+        [
+          "strong",
+          "world"
+        ]
+      ]
+    ]
+  },
+  {
+    "name": "toggle bold off before typing inside bold text",
+    "schema": "basic",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        [
+          "strong",
+          "bold<a>"
+        ]
+      ]
+    ],
+    "steps": [
+      {
+        "key": "Mod-b"
+      },
+      {
+        "type": "plain"
+      }
+    ],
+    "expect": [
+      "doc",
+      [
+        "paragraph",
+        [
+          "strong",
+          "bold"
+        ],
+        "plain"
+      ]
+    ]
+  },
+  {
+    "name": "stored mark is dropped when the cursor moves",
+    "schema": "basic",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        "ab<a>cd"
+      ]
+    ],
+    "steps": [
+      {
+        "key": "Mod-b"
+      },
+      {
+        "select": [
+          5
+        ]
+      },
+      {
+        "type": "x"
+      }
+    ],
+    "expect": [
+      "doc",
+      [
+        "paragraph",
+        "abcdx"
+      ]
+    ]
+  },
+  {
+    "name": "toggle bold on a selection, then off",
+    "schema": "basic",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        "one <a>two<b> three"
+      ]
+    ],
+    "steps": [
+      {
+        "key": "Mod-b"
+      },
+      {
+        "key": "Mod-b"
+      },
+      {
+        "key": "Mod-b"
+      }
+    ],
+    "expect": [
+      "doc",
+      [
+        "paragraph",
+        "one ",
+        [
+          "strong",
+          "two"
+        ],
+        " three"
+      ]
+    ]
+  },
+  {
+    "name": "bold over a selection drops surrounding whitespace",
+    "schema": "basic",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        "one<a> two <b>three"
+      ]
+    ],
+    "steps": [
+      {
+        "key": "Mod-b"
+      }
+    ],
+    "expect": [
+      "doc",
+      [
+        "paragraph",
+        "one ",
+        [
+          "strong",
+          "two"
+        ],
+        " three"
+      ]
+    ]
+  },
+  {
+    "name": "partial bold selection: toggle removes (removeWhenPresent)",
+    "schema": "basic",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        "a<a>b",
+        [
+          "strong",
+          "c<b>d"
+        ]
+      ]
+    ],
+    "steps": [
+      {
+        "key": "Mod-b"
+      }
+    ],
+    "expect": [
+      "doc",
+      [
+        "paragraph",
+        "abc",
+        [
+          "strong",
+          "d"
+        ]
+      ]
+    ]
+  },
+  {
+    "name": "typing at the end of bold text continues bold (inclusive)",
+    "schema": "basic",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        "plain ",
+        [
+          "strong",
+          "bold<a>"
+        ]
+      ]
+    ],
+    "steps": [
+      {
+        "type": "er"
+      }
+    ],
+    "expect": [
+      "doc",
+      [
+        "paragraph",
+        "plain ",
+        [
+          "strong",
+          "bolder"
+        ]
+      ]
+    ]
+  },
+  {
+    "name": "typing at the start of bold text after plain text is plain",
+    "schema": "basic",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        "plain <a>",
+        [
+          "strong",
+          "bold"
+        ]
+      ]
+    ],
+    "steps": [
+      {
+        "type": "x"
+      }
+    ],
+    "expect": [
+      "doc",
+      [
+        "paragraph",
+        "plain x",
+        [
+          "strong",
+          "bold"
+        ]
+      ]
+    ]
+  },
+  {
+    "name": "typing at the start of a paragraph that starts bold is bold",
+    "schema": "basic",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        [
+          "strong",
+          "<a>bold"
+        ]
+      ]
+    ],
+    "steps": [
+      {
+        "type": "x"
+      }
+    ],
+    "expect": [
+      "doc",
+      [
+        "paragraph",
+        [
+          "strong",
+          "xbold"
+        ]
+      ]
+    ]
+  },
+  {
+    "name": "link is not inclusive: typing after a link is plain",
+    "schema": "basic",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        [
+          "link",
+          {
+            "href": "https://a.b"
+          },
+          "link<a>"
+        ]
+      ]
+    ],
+    "steps": [
+      {
+        "type": "!"
+      }
+    ],
+    "expect": [
+      "doc",
+      [
+        "paragraph",
+        [
+          "link",
+          {
+            "href": "https://a.b"
+          },
+          "link"
+        ],
+        "!"
+      ]
+    ]
+  },
+  {
+    "name": "typing inside a link extends it",
+    "schema": "basic",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        [
+          "link",
+          {
+            "href": "https://a.b"
+          },
+          "li<a>nk"
+        ]
+      ]
+    ],
+    "steps": [
+      {
+        "type": "x"
+      }
+    ],
+    "expect": [
+      "doc",
+      [
+        "paragraph",
+        [
+          "link",
+          {
+            "href": "https://a.b"
+          },
+          "lixnk"
+        ]
+      ]
+    ]
+  },
+  {
+    "name": "basic schema: code mark does not exclude strong (no excludes spec)",
+    "schema": "basic",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        [
+          "strong",
+          "<a>bold text<b>"
+        ]
+      ]
+    ],
+    "steps": [
+      {
+        "key": "Mod-`"
+      }
+    ],
+    "expect": [
+      "doc",
+      [
+        "paragraph",
+        [
+          "strong",
+          [
+            "code",
+            "bold text"
+          ]
+        ]
+      ]
+    ]
+  },
+  {
+    "name": "tiptap schema: code mark excludes all other marks",
+    "schema": "tiptap",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        [
+          "bold",
+          "<a>bold text<b>"
+        ]
+      ]
+    ],
+    "steps": [
+      {
+        "key": "Mod-`"
+      }
+    ],
+    "expect": [
+      "doc",
+      [
+        "paragraph",
+        [
+          "code",
+          "bold text"
+        ]
+      ]
+    ]
+  },
+  {
+    "name": "bold + italic stack before typing",
+    "schema": "basic",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        "<a>"
+      ]
+    ],
+    "steps": [
+      {
+        "key": "Mod-b"
+      },
+      {
+        "key": "Mod-i"
+      },
+      {
+        "type": "both"
+      },
+      {
+        "key": "Mod-i"
+      },
+      {
+        "type": " bold"
+      }
+    ],
+    "expect": [
+      "doc",
+      [
+        "paragraph",
+        [
+          "strong",
+          [
+            "em",
+            "both"
+          ],
+          " bold"
+        ]
+      ]
+    ]
+  },
+  {
+    "name": "Enter keeps typing marks? (splitBlock does not carry stored marks)",
+    "schema": "basic",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        [
+          "strong",
+          "bold<a>"
+        ]
+      ]
+    ],
+    "steps": [
+      {
+        "key": "Enter"
+      },
+      {
+        "type": "next"
+      }
+    ]
+  },
+  {
+    "name": "Enter with a stored mark, then type",
+    "schema": "basic",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        "text<a>"
+      ]
+    ],
+    "steps": [
+      {
+        "key": "Mod-b"
+      },
+      {
+        "key": "Enter"
+      },
+      {
+        "type": "x"
+      }
+    ]
+  },
+  {
+    "name": "select all and type replaces everything",
+    "schema": "basic",
+    "doc": [
+      "doc",
+      [
+        "heading",
+        {
+          "level": 1
+        },
+        "Title"
+      ],
+      [
+        "paragraph",
+        [
+          "strong",
+          "body"
+        ]
+      ]
+    ],
+    "steps": [
+      {
+        "key": "Mod-a"
+      },
+      {
+        "type": "new"
+      }
+    ]
+  },
+  {
+    "name": "typing over a bold selection keeps bold",
+    "schema": "basic",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        [
+          "strong",
+          "a<a>bc<b>d"
+        ]
+      ]
+    ],
+    "steps": [
+      {
+        "type": "X"
+      }
+    ],
+    "expect": [
+      "doc",
+      [
+        "paragraph",
+        [
+          "strong",
+          "aXd"
+        ]
+      ]
+    ]
+  }
+]

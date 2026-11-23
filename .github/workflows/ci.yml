@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  macos:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Build
+        run: swift build
+      - name: Test
+        run: swift test
+      - name: The committed oracle matches its source
+        run: |
+          cd oracle && npm ci && npm run build
+          git diff --exit-code dist/oracle.js
+
+  ios:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Test the iOS text view
+        run: |
+          DEVICE=$(xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; print(next(x['udid'] for k in d if 'iOS' in k for x in d[k] if x['name'].startswith('iPhone')))")
+          xcodebuild -scheme ProseMirrorSwift-Package -destination "id=$DEVICE" test -only-testing:IOSTextKitTests
+      - name: Build the iOS example
+        run: xcodebuild -project Examples/iOS/iOSExample.xcodeproj -scheme iOSExample -destination 'generic/platform=iOS Simulator' build

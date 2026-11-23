@@ -1,0 +1,115 @@
+[
+  {
+    "name": "Enter at end of heading creates a paragraph",
+    "schema": "basic",
+    "doc": ["doc", ["heading", {"level": 2}, "Title<a>"]],
+    "steps": [{"key": "Enter"}, {"type": "body"}],
+    "expect": ["doc", ["heading", {"level": 2}, "Title"], ["paragraph", "body"]]
+  },
+  {
+    "name": "Enter in the middle of a heading splits it into two headings",
+    "schema": "basic",
+    "doc": ["doc", ["heading", {"level": 2}, "Ti<a>tle"]],
+    "steps": [{"key": "Enter"}],
+    "expect": ["doc", ["heading", {"level": 2}, "Ti"], ["heading", {"level": 2}, "tle"]]
+  },
+  {
+    "name": "Enter at start of heading inserts paragraph above",
+    "schema": "basic",
+    "doc": ["doc", ["heading", {"level": 2}, "<a>Title"]],
+    "steps": [{"key": "Enter"}]
+  },
+  {
+    "name": "Enter in empty list item lifts out of the list",
+    "schema": "basic",
+    "doc": ["doc", ["bullet_list", ["list_item", ["paragraph", "one"]], ["list_item", ["paragraph", "<a>"]]]],
+    "steps": [{"key": "Enter"}],
+    "expect": ["doc", ["bullet_list", ["list_item", ["paragraph", "one"]]], ["paragraph"]]
+  },
+  {
+    "name": "Enter in non-empty list item splits it",
+    "schema": "basic",
+    "doc": ["doc", ["bullet_list", ["list_item", ["paragraph", "one<a>"]]]],
+    "steps": [{"key": "Enter"}, {"type": "two"}],
+    "expect": ["doc", ["bullet_list", ["list_item", ["paragraph", "one"]], ["list_item", ["paragraph", "two"]]]]
+  },
+  {
+    "name": "Enter twice in a list exits it",
+    "schema": "basic",
+    "doc": ["doc", ["ordered_list", ["list_item", ["paragraph", "a<a>"]]]],
+    "steps": [{"key": "Enter"}, {"key": "Enter"}, {"type": "after"}]
+  },
+  {
+    "name": "Enter in empty nested list item outdents",
+    "schema": "basic",
+    "doc": ["doc", ["bullet_list", ["list_item", ["paragraph", "outer"], ["bullet_list", ["list_item", ["paragraph", "inner"]], ["list_item", ["paragraph", "<a>"]]]]]],
+    "steps": [{"key": "Enter"}, {"type": "x"}]
+  },
+  {
+    "name": "Tab sinks and Shift-Tab lifts a list item",
+    "schema": "basic",
+    "doc": ["doc", ["bullet_list", ["list_item", ["paragraph", "a"]], ["list_item", ["paragraph", "b<a>"]]]],
+    "steps": [{"key": "Tab"}, {"key": "Shift-Tab"}, {"key": "Tab"}]
+  },
+  {
+    "name": "Backspace at start of list item lifts it out",
+    "schema": "basic",
+    "doc": ["doc", ["bullet_list", ["list_item", ["paragraph", "a"]], ["list_item", ["paragraph", "<a>b"]]]],
+    "steps": [{"key": "Backspace"}, {"key": "Backspace"}]
+  },
+  {
+    "name": "Backspace joins paragraphs",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", ["strong", "one"]], ["paragraph", "<a>two"]],
+    "steps": [{"key": "Backspace"}],
+    "expect": ["doc", ["paragraph", ["strong", "one"], "two"]]
+  },
+  {
+    "name": "Backspace at start of heading after paragraph joins into paragraph",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "one"], ["heading", {"level": 1}, "<a>two"]],
+    "steps": [{"key": "Backspace"}]
+  },
+  {
+    "name": "Delete at end joins next block",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "one<a>"], ["blockquote", ["paragraph", "two"]]],
+    "steps": [{"key": "Delete"}]
+  },
+  {
+    "name": "Enter in empty paragraph in blockquote lifts it",
+    "schema": "basic",
+    "doc": ["doc", ["blockquote", ["paragraph", "q"], ["paragraph", "<a>"]]],
+    "steps": [{"key": "Enter"}]
+  },
+  {
+    "name": "Shift-Enter inserts a hard break with marks",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", ["em", "it<a>"]]],
+    "steps": [{"key": "Shift-Enter"}, {"type": "x"}]
+  },
+  {
+    "name": "Backspace over an image (atom) selects then deletes",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "a"], ["horizontal_rule"], ["paragraph", "<a>b"]],
+    "steps": [{"key": "Backspace"}, {"key": "Backspace"}]
+  },
+  {
+    "name": "set heading and back via keys",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "x<a>y"]],
+    "steps": [{"key": "Shift-Ctrl-2"}, {"key": "Shift-Ctrl-0"}, {"key": "Shift-Ctrl-\\"}]
+  },
+  {
+    "name": "Enter in code block inserts newline; Mod-Enter exits",
+    "schema": "basic",
+    "doc": ["doc", ["code_block", "let x<a>"]],
+    "steps": [{"key": "Enter"}, {"type": "y"}, {"key": "Mod-Enter"}, {"type": "after"}]
+  },
+  {
+    "name": "wrap in bullet list and lift",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "<a>one"], ["paragraph", "two<b>"]],
+    "steps": [{"key": "Shift-Ctrl-8"}, {"key": "Mod-["}]
+  }
+]

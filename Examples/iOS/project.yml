@@ -1,0 +1,43 @@
+# The iOS example: PMExampleSetup's schema, plugins and style in PMTextKit's UIKit ProseTextView.
+# The .xcodeproj is generated from this file (`xcodegen` in this folder) and committed, so
+# xcodegen isn't needed to build:
+#   xcodebuild -project Examples/iOS/iOSExample.xcodeproj -scheme iOSExample \
+#     -destination 'generic/platform=iOS Simulator' build
+# or open the project in Xcode and run it on a simulator.
+name: iOSExample
+options:
+  bundleIdPrefix: dev.prosemirror-swift
+  deploymentTarget:
+    iOS: "16.0"
+packages:
+  ProseMirrorSwift:
+    path: ../..
+targets:
+  iOSExample:
+    type: application
+    platform: iOS
+    sources: [Sources]
+    dependencies:
+      - package: ProseMirrorSwift
+        product: PMExampleSetup
+      - package: ProseMirrorSwift
+        product: PMTextKit
+      - package: ProseMirrorSwift
+        product: PMHistory
+      - package: ProseMirrorSwift
+        product: PMState
+      - package: ProseMirrorSwift
+        product: PMModel
+      - package: ProseMirrorSwift
+        product: PMCommands
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Example Editor
+        MARKETING_VERSION: "0.1"
+        CURRENT_PROJECT_VERSION: "1"
+        SWIFT_VERSION: "5.0"
+        CODE_SIGNING_ALLOWED: NO
+        TARGETED_DEVICE_FAMILY: "1,2"

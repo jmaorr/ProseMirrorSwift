@@ -1,0 +1,173 @@
+[
+  {
+    "name": "bold before typing",
+    "schema": "tiptap",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        "hi <a>"
+      ]
+    ],
+    "steps": [
+      {
+        "key": "Mod-b"
+      },
+      {
+        "type": "there"
+      }
+    ],
+    "expect": [
+      "doc",
+      [
+        "paragraph",
+        "hi ",
+        [
+          "bold",
+          "there"
+        ]
+      ]
+    ]
+  },
+  {
+    "name": "Enter at end of heading",
+    "schema": "tiptap",
+    "doc": [
+      "doc",
+      [
+        "heading",
+        {
+          "level": 1
+        },
+        "Title<a>"
+      ]
+    ],
+    "steps": [
+      {
+        "key": "Enter"
+      },
+      {
+        "type": "x"
+      }
+    ]
+  },
+  {
+    "name": "Enter in task item splits, Enter in empty task item lifts",
+    "schema": "tiptap",
+    "doc": [
+      "doc",
+      [
+        "taskList",
+        [
+          "taskItem",
+          {
+            "checked": true
+          },
+          [
+            "paragraph",
+            "buy milk<a>"
+          ]
+        ]
+      ]
+    ],
+    "steps": [
+      {
+        "key": "Enter"
+      },
+      {
+        "type": "eggs"
+      },
+      {
+        "key": "Enter"
+      },
+      {
+        "key": "Enter"
+      },
+      {
+        "type": "done"
+      }
+    ]
+  },
+  {
+    "name": "Tab nests a task item",
+    "schema": "tiptap",
+    "doc": [
+      "doc",
+      [
+        "taskList",
+        [
+          "taskItem",
+          [
+            "paragraph",
+            "a"
+          ]
+        ],
+        [
+          "taskItem",
+          [
+            "paragraph",
+            "b<a>"
+          ]
+        ]
+      ]
+    ],
+    "steps": [
+      {
+        "key": "Tab"
+      },
+      {
+        "key": "Shift-Tab"
+      }
+    ]
+  },
+  {
+    "name": "- list then undo",
+    "schema": "tiptap",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        "<a>"
+      ]
+    ],
+    "steps": [
+      {
+        "type": "- item"
+      },
+      {
+        "wait": 700
+      },
+      {
+        "key": "Mod-z"
+      },
+      {
+        "key": "Mod-z"
+      }
+    ]
+  },
+  {
+    "name": "highlight/underline via keys and commands",
+    "schema": "tiptap",
+    "doc": [
+      "doc",
+      [
+        "paragraph",
+        "a <a>word<b> b"
+      ]
+    ],
+    "steps": [
+      {
+        "key": "Mod-u"
+      },
+      {
+        "command": "toggleMark",
+        "args": [
+          "highlight"
+        ]
+      },
+      {
+        "key": "Mod-i"
+      }
+    ]
+  }
+]

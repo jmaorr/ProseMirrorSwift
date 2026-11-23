@@ -1,0 +1,89 @@
+[
+  {
+    "name": "markdown **bold**",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "say <a>"]],
+    "steps": [{"type": "**bold**"}, {"type": " after"}],
+    "expect": ["doc", ["paragraph", "say ", ["strong", "bold"], " after"]]
+  },
+  {
+    "name": "markdown *em*",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "<a>"]],
+    "steps": [{"type": "*em* x"}],
+    "expect": ["doc", ["paragraph", ["em", "em"], " x"]]
+  },
+  {
+    "name": "markdown `code`",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "a <a>"]],
+    "steps": [{"type": "`x+1` b"}],
+    "expect": ["doc", ["paragraph", "a ", ["code", "x+1"], " b"]]
+  },
+  {
+    "name": "# heading",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "<a>"]],
+    "steps": [{"type": "# Title"}],
+    "expect": ["doc", ["heading", {"level": 1}, "Title"]]
+  },
+  {
+    "name": "### heading then Enter",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "<a>"]],
+    "steps": [{"type": "### Small"}, {"key": "Enter"}, {"type": "p"}],
+    "expect": ["doc", ["heading", {"level": 3}, "Small"], ["paragraph", "p"]]
+  },
+  {
+    "name": "# only at start of block",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "x<a>"]],
+    "steps": [{"type": "# y"}],
+    "expect": ["doc", ["paragraph", "x# y"]]
+  },
+  {
+    "name": "> blockquote",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "<a>"]],
+    "steps": [{"type": "> quote"}],
+    "expect": ["doc", ["blockquote", ["paragraph", "quote"]]]
+  },
+  {
+    "name": "- bullet list, Enter, second item",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "<a>"]],
+    "steps": [{"type": "- one"}, {"key": "Enter"}, {"type": "two"}],
+    "expect": ["doc", ["bullet_list", ["list_item", ["paragraph", "one"]], ["list_item", ["paragraph", "two"]]]]
+  },
+  {
+    "name": "1. ordered list joins previous list",
+    "schema": "basic",
+    "doc": ["doc", ["ordered_list", ["list_item", ["paragraph", "one"]]], ["paragraph", "<a>"]],
+    "steps": [{"type": "2. two"}]
+  },
+  {
+    "name": "``` code block",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "<a>"]],
+    "steps": [{"type": "```"}, {"type": "x = 1"}],
+    "expect": ["doc", ["code_block", "x = 1"]]
+  },
+  {
+    "name": "no markdown rules inside code block",
+    "schema": "basic",
+    "doc": ["doc", ["code_block", "<a>"]],
+    "steps": [{"type": "**no** \"q\""}]
+  },
+  {
+    "name": "smart quotes, ellipsis, em dash",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", "<a>"]],
+    "steps": [{"type": "\"hi\" it's -- wait..."}]
+  },
+  {
+    "name": "no smart quotes inside code mark",
+    "schema": "basic",
+    "doc": ["doc", ["paragraph", ["code", "a<a>"]]],
+    "steps": [{"type": "\"b\""}]
+  }
+]
