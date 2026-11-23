@@ -11,7 +11,7 @@
     "lib0": "0.2.117",
     "prosemirror-commands": "1.7.2",
     "prosemirror-keymap": "1.2.3",
-    "prosemirror-model": "1.25.12",
+    "prosemirror-model": "1.25.13",
     "prosemirror-state": "1.4.4",
     "prosemirror-transform": "1.12.1",
     "prosemirror-view": "1.42.8",
