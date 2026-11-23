@@ -731,10 +731,20 @@ public final class ProseTextView: NSTextView, EditorView, EditorCoreObserver, NS
         let sel = state.selection
         let from = renderer.stringOffset(sel.from, bias: 1)
         let to = max(from, renderer.stringOffset(sel.to, bias: -1))
+        // A node-selected leaf block (a rule, an image, a file card) shows its own selection: the
+        // text highlight would only be a band behind or below it. AppKit gets an empty range at
+        // the block, and no caret is drawn there.
+        selectsLeafBlock = (sel as? NodeSelection).map { $0.node.isLeaf && $0.node.isBlock } ?? false
         syncingSelection = true
-        setSelectedRange(NSRange(location: from, length: to - from))
+        setSelectedRange(NSRange(location: from, length: selectsLeafBlock ? 0 : to - from))
         syncingSelection = false
     }
+
+    /// The selection is a node selection of a leaf block (see `syncSelectionToView`): no text
+    /// highlight, no caret.
+    public private(set) var selectsLeafBlock = false
+
+    public override var shouldDrawInsertionPoint: Bool { super.shouldDrawInsertionPoint && !selectsLeafBlock }
 
     public override func setSelectedRanges(_ ranges: [NSValue], affinity: NSSelectionAffinity, stillSelecting: Bool) {
         super.setSelectedRanges(ranges, affinity: affinity, stillSelecting: stillSelecting)

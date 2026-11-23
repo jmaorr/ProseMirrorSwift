@@ -80,7 +80,7 @@ extension ProseTextView {
 
     func caretRect(layingOut: Bool) -> CGRect? {
         let offset = selectedRange().location
-        guard caret != .system, selectedRange().length == 0, var r = lineRect(atString: offset, layingOut: layingOut),
+        guard caret != .system, !selectsLeafBlock, selectedRange().length == 0, var r = lineRect(atString: offset, layingOut: layingOut),
               let tlm = textLayoutManager, let tcs = textContentStorage,
               let loc = tcs.location(tcs.documentRange.location, offsetBy: offset),
               let fragment = tlm.textLayoutFragment(for: loc) else { return nil }
