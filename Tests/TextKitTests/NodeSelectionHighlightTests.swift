@@ -49,7 +49,6 @@ final class NodeSelectionHighlightTests: XCTestCase {
 
     func testNodeSelectedLeafBlockHasNoTextHighlight() throws {
         let host = try hosted { NodeSelection.create($0, 7) }
-        defer { host.window.close() }
         XCTAssertTrue(host.state.selection is NodeSelection)
         XCTAssertEqual(highlightLines(host.view).count, 0)
         XCTAssertTrue(host.view.selectsLeafBlock)
@@ -60,9 +59,28 @@ final class NodeSelectionHighlightTests: XCTestCase {
 
     func testTextSelectionsStillHighlight() throws {
         let host = try hosted { TextSelection.create($0, 1, 6) }
-        defer { host.window.close() }
         XCTAssertGreaterThan(highlightLines(host.view).count, 0)
         XCTAssertFalse(host.view.selectsLeafBlock)
+    }
+}
+#endif
+
+#if os(macOS)
+/// An overhanging view that sets no cursor of its own (NSView's cursorUpdate passes it up the
+/// responder chain, back to the text view) mustn't send the two asking each other forever.
+@MainActor
+final class OverhangingCursorTests: XCTestCase {
+    func testOverhangingViewWithoutACursorDoesNotRecurse() throws {
+        let host = HostedTextView(try TestDocs.paragraphs(["One", "Two"]))
+        let plain = NSView(frame: NSRect(x: 20, y: 5, width: 100, height: 40))
+        host.view.addSubview(plain)
+        host.view.overhangingViews.add(plain)
+        let point = plain.convert(CGPoint(x: 50, y: 20), to: nil)
+        let event = try XCTUnwrap(NSEvent.mouseEvent(with: .mouseMoved, location: point, modifierFlags: [], timestamp: 0,
+                                                     windowNumber: host.window.windowNumber, context: nil, eventNumber: 0,
+                                                     clickCount: 0, pressure: 0))
+        host.view.cursorUpdate(with: event)  // a stack overflow before
+        host.view.mouseMoved(with: event)
     }
 }
 #endif

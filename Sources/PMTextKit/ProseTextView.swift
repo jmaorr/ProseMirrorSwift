@@ -645,6 +645,9 @@ public final class ProseTextView: NSTextView, EditorView, EditorCoreObserver, NS
         hoverLink = nil
     }
 
+    /// Set while an overhanging view is asked for the cursor (see `setEmbeddedCursor`).
+    private var forwardingCursorUpdate = false
+
     public override func cursorUpdate(with event: NSEvent) {
         if setEmbeddedCursor(for: event) { return }
         super.cursorUpdate(with: event)
@@ -662,7 +665,15 @@ public final class ProseTextView: NSTextView, EditorView, EditorCoreObserver, NS
             NSCursor.pointingHand.set()
             return true
         }
+        // An overhanging view that doesn't set a cursor itself passes cursorUpdate up its
+        // responder chain, back to this view: answer that with the arrow instead of asking again.
         if let view = overhangingView(for: event) {
+            if forwardingCursorUpdate {
+                NSCursor.arrow.set()
+                return true
+            }
+            forwardingCursorUpdate = true
+            defer { forwardingCursorUpdate = false }
             view.cursorUpdate(with: event)
             return true
         }
